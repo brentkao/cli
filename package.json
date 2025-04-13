@@ -1,0 +1,35 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "bin": {
+    "cli": "dist/bin/cli.js"
+  },
+  "scripts": {
+    "dev": "ts-node ./bin/cli.ts",
+    "build": "tsc",
+    "pkg:mac": "pkg dist/bin/cli.js --targets node18-macos-x64 --output release/cli-macos",
+    "pkg:win": "pkg dist/bin/cli.js --targets node18-win-x64 --output release/cli-win.exe",
+    "pkg:linux": "pkg dist/bin/cli.js --targets node18-linux-x64 --output release/cli-linux",
+    "pkg:all": "npm run pkg:mac && npm run pkg:win && npm run pkg:linux",
+    "make-launchers": "ts-node tools/generate-launchers.ts",
+    "release:zip": "ts-node tools/zip-release.ts",
+    "release:build": "npm run build && npm run pkg:all && npm run make-launchers && npm run release:zip"
+  },
+  "pkg": {
+    "scripts": [
+      "dist/**/*"
+    ]
+  },
+  "dependencies": {
+    "inquirer": "^12.5.2"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^22.14.1",
+    "archiver": "^7.0.1",
+    "pkg": "^5.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
