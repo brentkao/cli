@@ -1,0 +1,31 @@
+name: Build and Release CLI
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🔨 Build CLI + Generate Launchers + Zip
+        run: npm run release:build
+
+      - name: 📤 Upload CLI zips to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/cli-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
