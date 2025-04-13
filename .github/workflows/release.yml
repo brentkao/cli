@@ -2,11 +2,15 @@ name: Build and Release CLI
 
 on:
   release:
-    types: [created]
+    types: [created]  # ⚠️ 只有「發佈 release」時才會觸發
+
+permissions:
+  contents: write     # ✅ 這是關鍵：允許 upload release assets
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: 🛎️ Checkout code
         uses: actions/checkout@v3
@@ -22,7 +26,7 @@ jobs:
       - name: 🔨 Build CLI + Generate Launchers + Zip
         run: npm run release:build
 
-      - name: 📤 Upload CLI zips to release
+      - name: 📤 Upload CLI zips to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
