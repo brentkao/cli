@@ -37,3 +37,30 @@ npm run build             # 編譯 TypeScript 至 dist/
 npm run pkg:all           # 打包成可執行檔（mac/win/linux）
 npm run make-launchers    # 生成啟動與安裝腳本
 npm run release:build     # 一鍵打包 + 產生所有平台腳本
+```
+
+## 專案結構
+```
+bin/
+├── cli.ts
+src/
+├── core/
+│   ├── configService.ts       ←  ✨ 儲存與讀取 ~/.cli/config.json 的工具
+│   └── playerApi.ts           ←  處理 API 呼叫，例如 fetchAllPlayers 等
+│
+├── handlers/
+│   └── xxxHandler.ts          ←  功能執行邏輯，例如實際去呼叫 API
+│
+├── menus/
+│   ├── mainMenu.ts            ←  主選單，選擇「設定環境」、「功能」等
+│   ├── envMenu.ts             ←  環境設定（dev/staging/prod）
+│   ├── serviceMenu.ts         ←  選擇要操作的服務（例如 money-service）
+│   ├── featureMenu.ts         ←  選擇操作功能（如 fetchPlayerInfo）
+│   └── pickerMenu.ts          ←  🚧（待擴充）泛用選擇器
+│
+├── types/
+│   └── config.ts              ←  設定檔類型定義（如 env, service, feature）
+│
+└── index.ts                   ←  CLI 進入點，初始化 config + 執行 mainMenu()
+
+```
