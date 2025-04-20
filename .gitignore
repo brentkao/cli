@@ -3,3 +3,4 @@ dist/
 release/
 launchers/
 *.log
+cli-config-export.json
